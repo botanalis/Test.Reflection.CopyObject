@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflection.CopyObject", "Reflection.CopyObject\Reflection.CopyObject.csproj", "{907C9BFF-4592-4215-A18D-96D7BA43E7A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflection.CopyObject.Test", "Reflection.CopyObject.Test\Reflection.CopyObject.Test.csproj", "{9FB22CFE-FAA5-4360-AFDC-73292388D69C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{907C9BFF-4592-4215-A18D-96D7BA43E7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907C9BFF-4592-4215-A18D-96D7BA43E7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907C9BFF-4592-4215-A18D-96D7BA43E7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907C9BFF-4592-4215-A18D-96D7BA43E7A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB22CFE-FAA5-4360-AFDC-73292388D69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB22CFE-FAA5-4360-AFDC-73292388D69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB22CFE-FAA5-4360-AFDC-73292388D69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB22CFE-FAA5-4360-AFDC-73292388D69C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
