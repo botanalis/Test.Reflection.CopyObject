@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Reflection.CopyObject.Test.Data;
 
 namespace Reflection.CopyObject.Test
 {
@@ -12,6 +13,11 @@ namespace Reflection.CopyObject.Test
         [Test]
         public void Test1()
         {
+            var tempClass = TemplateClass.GetTestClass();
+            var dataClass = TestClass.GetTestClass();
+            var myRelfection = new MyReflectionObject();
+            var resultClass = myRelfection.CopyObject(dataClass, tempClass);
+            
             Assert.Pass();
         }
     }
