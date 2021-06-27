@@ -11,10 +11,12 @@ namespace Reflection.CopyObject.Test.Data
         
         public class TestClass1
         {
+            [FieldDescContent("欄位1")]
             public string FieldStr { get; set; }
             // public int FieldInt { get; set; }
             // public bool FieldBool { get; set; }
 
+            [FieldDescContent("清單1")]
             public List<TestClass2> FieldList { get; set; }
 
            

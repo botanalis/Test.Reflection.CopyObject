@@ -50,6 +50,42 @@ namespace Reflection.CopyObject
             return resultObj;
         }
 
+        public List<DiffContent> GetDiffContents<T>(T newObj, T oldObj)
+        {
+            List<DiffContent> diffResult = new List<DiffContent>();
+
+            PropertyInfo[] propertyInfos = typeof(T).GetProperties();
+
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                var oOldValue = propertyInfo.GetValue(oldObj, null);
+                var oNewValue = propertyInfo.GetValue(newObj, null);
+
+                if (oOldValue == null && oNewValue == null)
+                {
+                    continue;
+                }
+                if (!Object.Equals(oOldValue, oNewValue))
+                {
+                    var attrs = propertyInfo.GetCustomAttributes(typeof(FieldDescContentAttribute), false);
+                    // 取得說明內容
+                    var desc = ((FieldDescContentAttribute) attrs.FirstOrDefault())?.Desc;
+
+                    var diffContent = new DiffContent();
+                    diffContent.Option = "Modify";
+                    diffContent.BeforeValue = $"{oOldValue}";
+                    diffContent.AfterValue = $"{oNewValue}";
+                    diffContent.FieldName = propertyInfo.Name;
+                    diffContent.Description = desc;
+
+                    diffResult.Add(diffContent);
+
+                }
+            }
+
+            return diffResult;
+        }
+
         /// <summary>
         /// 
         /// </summary>
