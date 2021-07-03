@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Reflection.CopyObject.AttributeDefs;
 
 namespace Reflection.CopyObject.Test.Data
 {
@@ -12,11 +13,19 @@ namespace Reflection.CopyObject.Test.Data
         public class TestClass1
         {
             [FieldDescContent("欄位1")]
+            [FieldChangContent("欄位1", "FieldStrDesc1" )]
             public string FieldStr { get; set; }
+            public string FieldStrDesc1 { get; set; }
+            public string FieldStrDesc2 { get; set; }
+
+            [FieldChangContent("欄位2" )]
+            public string FieldStr2 { get; set; }
+
             // public int FieldInt { get; set; }
             // public bool FieldBool { get; set; }
 
             [FieldDescContent("清單1")]
+            [FieldChangContent("欄位1" )]
             public List<TestClass2> FieldList { get; set; }
 
            

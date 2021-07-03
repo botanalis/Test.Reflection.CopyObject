@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Reflection.CopyObject
+namespace Reflection.CopyObject.AttributeDefs
 {
     /// <summary>
     /// 欄位說明

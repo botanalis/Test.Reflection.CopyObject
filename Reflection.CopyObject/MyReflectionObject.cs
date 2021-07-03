@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.VisualBasic;
+using Reflection.CopyObject.AttributeDefs;
 
 namespace Reflection.CopyObject
 {
@@ -61,20 +63,33 @@ namespace Reflection.CopyObject
                 var oOldValue = propertyInfo.GetValue(oldObj, null);
                 var oNewValue = propertyInfo.GetValue(newObj, null);
 
+                var verifyChangContent = propertyInfo.GetCustomAttributes(typeof(FieldChangContentAttribute), false);
+                // 取得比對參數
+                var verifyParam = (FieldChangContentAttribute) verifyChangContent.FirstOrDefault();
+                
+                if (verifyParam == null)
+                {
+                    //不比對
+                    continue;
+                }
+                
                 if (oOldValue == null && oNewValue == null)
                 {
                     continue;
                 }
                 if (!Object.Equals(oOldValue, oNewValue))
                 {
-                    var attrs = propertyInfo.GetCustomAttributes(typeof(FieldDescContentAttribute), false);
                     // 取得說明內容
-                    var desc = ((FieldDescContentAttribute) attrs.FirstOrDefault())?.Desc;
+                    var desc = verifyParam.Description;
+                    var fieldNames = verifyParam.ResultValues;
+
+                    var oldValue = this.GetProptryValue(oldObj, fieldNames);
+                    var newValue = this.GetProptryValue(newObj, fieldNames);
 
                     var diffContent = new DiffContent();
                     diffContent.Option = "Modify";
-                    diffContent.BeforeValue = $"{oOldValue}";
-                    diffContent.AfterValue = $"{oNewValue}";
+                    diffContent.BeforeValue = String.IsNullOrEmpty(oldValue) ? $"{oOldValue}" : oldValue;
+                    diffContent.AfterValue = String.IsNullOrEmpty(newValue) ? $"{oNewValue}" : newValue;
                     diffContent.FieldName = propertyInfo.Name;
                     diffContent.Description = desc;
 
@@ -84,6 +99,46 @@ namespace Reflection.CopyObject
             }
 
             return diffResult;
+        }
+        
+        /// <summary>
+        /// 取得 Proptry Value
+        /// </summary>
+        /// <param name="obj">Object</param>
+        /// <param name="fieldNames">欄位名稱</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private string GetProptryValue<T>(T obj, string fieldNames)
+        {
+            List<string> result = new List<string>();
+
+            if (String.IsNullOrEmpty(fieldNames))
+            {
+                return "";
+            }
+            
+            var fieldNameList = fieldNames.Split(",");
+
+            foreach (string fieldName in fieldNameList)
+            {
+                var value = typeof(T).GetProperty(fieldName)?.GetValue(obj, null);
+                if (value != null)
+                {
+                    if (String.IsNullOrEmpty($"{value}"))
+                    {
+                        continue;
+                    }
+                    
+                    result.Add($"{value}");
+                }
+            }
+
+            if (result.Count > 0)
+            {
+                return String.Join($"/", result.ToArray());
+            }
+            
+            return "";
         }
 
         /// <summary>
